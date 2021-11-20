@@ -21,7 +21,7 @@ void delchar(char *s,char c)
 }
  
  
-int main(void)
+int main()
 {
     char s[100];
     char c;
