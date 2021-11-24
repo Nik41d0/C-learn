@@ -1,4 +1,4 @@
-\\汉诺塔
+//汉诺塔
 #include<stdio.h>
 void move(char x,char y)
 {
