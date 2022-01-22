@@ -1,4 +1,4 @@
-//删除字符串中的字符。输入一个字符串s，再输入一个字符c，将字符串s中出现的所有字符c删除。要求定义并调用函数delchar(s,c)，它的功能是将字符串s中出现的所有c字符删除
+//输入一个字符串s，再输入一个字符c，将字符串s中出现的所有字符c删除。函数delchar(s,c)的功能是将字符串s中出现的所有c字符删除
 #include <stdio.h>
 void delchar(char *s,char c)
 {
@@ -19,8 +19,6 @@ void delchar(char *s,char c)
             p++;
     }
 }
- 
- 
 int main()
 {
     char s[100];
