@@ -1,19 +1,18 @@
-
 #include<stdio.h>
 void move(char x,char y)
 {
-  printf("%c-->%c\n", x, y");
+  printf("%c-->%c\n", x, y);
 }
-void h(int x,char one,char two,char three)      
+void h(int x,char one,char two,char three)
 {
   if(x==1) move(one,two);
-  else 
+  else
   {
     h(x-1,one,two,three);
-    move(o, e);
-		h(x - 1, t, o, e);
+    move(one, three);
+		h(x - 1, two, one, three);
   }
-}    
+}
 int main()
 {
   int a;
