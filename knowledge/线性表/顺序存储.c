@@ -2,12 +2,15 @@
 #include<stdlib.h>
 #define LIST_SIZE 100  // 线性表的初始长度
 #define LIST_ADD 10     // 线性表的长度增量
+
+
 typedef struct
 {
 	int *p;
 	int length;  //  当前元素个数
 	int listsize;  // 当前线性表的尺寸
 }LinkList;
+
 
 int Initlist_LL(LinkList *l)
 {
