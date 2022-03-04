@@ -22,11 +22,35 @@ int Initlist_LL(LinkList *l)
 	return 1;
 }
 
+int Listinsert_LL(LinkList *l,int k,int e)  
+{
+	int *a,*b;
+	if(k<1||k>l->length+1)
+		return 0;
+	if(l->length>=l->listsize)
+	{
+		int i,*newp=(int*)malloc((l->listsize+LIST_ADD)*sizeof(int));
+		if(!newp)
+			return 0;
+		for(i=0;l->length;i++)
+			newp[i]=l->p[i];
+		free(l->p);
+		l->p=newp;
+	}
+	b=&(l->p[k-1]);
+	for(a=&l->p[l->length-1];a>=b;a--)
+		*(a+1)=*a;
+	*b=e;
+	l->length++;
+	return 1;
+}
+
 
 void DestroyList(LinkList *l) //清空线性表
 {
 	free(l->p);  //释放空间
 }
+
 
 void PrintList(LinkList *l)
 {
@@ -34,12 +58,6 @@ void PrintList(LinkList *l)
 	while(i<l->length)
 		printf("%d ",l->p[i++]);
 	printf("\n");
-}
-
-
-void ClearList(LinkList *l)  // 伪清空，仅是吧空间个数设为0，但原先线性表中的元素并未删除
-{
-	l->length=0;
 }
 
 
