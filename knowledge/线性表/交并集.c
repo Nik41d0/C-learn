@@ -46,6 +46,16 @@ int Listinsert_LL(LinkList *l,int k,int e)
 }
 
 
+void ListDelete(LinkList *l,int k,int *e)  //  将第k个数删除
+{
+	int i;
+	*e=l->p[k-1];
+	for(i=k;i<l->length;i++)
+		l->p[i-1]=l->p[i];
+	l->length--;
+}
+
+
 void DestroyList(LinkList *l) //清空线性表
 {
 	free(l->p);  //释放空间
