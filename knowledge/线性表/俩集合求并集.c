@@ -1,13 +1,16 @@
 #include<stdio.h>
 #include<stdlib.h>
-#define LIST_SIZE 100  // 线性表的厨师长度
+#define LIST_SIZE 100  // 线性表的初始长度
 #define LIST_ADD 10     // 线性表的长度增量
+
+
 typedef struct
 {
 	int *p;
 	int length;  //  当前元素个数
 	int listsize;  // 当前线性表的尺寸
 }LinkList;
+
 
 int Initlist_LL(LinkList *l)
 {
@@ -32,7 +35,9 @@ void PrintList(LinkList *l)
 		printf("%d ",l->p[i++]);
 	printf("\n");
 }
-void ClearList(LinkList *l)  // 伪清空，仅是吧空间个数设为0
+
+
+void ClearList(LinkList *l)  // 伪清空，仅是吧空间个数设为0，但原先线性表中的元素并未删除
 {
 	l->length=0;
 }
@@ -79,6 +84,8 @@ void Qbingji1(LinkList *la,LinkList *lb)
 		}
 	}
 }
+
+
 int  main()
 {
 	LinkList la,lb;
