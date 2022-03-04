@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#define LIST_SIZE 100  // 线性表的厨师长度
+#define LIST_SIZE 100  // 线性表的初始长度
 #define LIST_ADD 10     // 线性表的长度增量
 typedef struct
 {
@@ -18,6 +18,7 @@ int Initlist_LL(LinkList *l)
 	l->listsize=LIST_SIZE;
 	return 1;
 }
+
 
 int Listinsert_LL(LinkList *l,int k,int e)  // 在线性表中在第k位置插入一个数e
 {
@@ -42,10 +43,18 @@ int Listinsert_LL(LinkList *l,int k,int e)  // 在线性表中在第k位置插�
 	return 1;
 }
 
+
 void DestroyList(LinkList *l) //清空线性表
 {
 	free(l->p);  //释放空间
 }
+
+
+void ClearList(LinkList *l)  // 伪清空，仅是把空间个数设为0
+{
+	l->length=0;
+}
+
 
 void PrintList(LinkList *l)
 {
@@ -54,36 +63,7 @@ void PrintList(LinkList *l)
 		printf("%d ",l->p[i++]);
 	printf("\n");
 }
-void ClearList(LinkList *l)  // 伪清空，仅是吧空间个数设为0
-{
-	l->length=0;
-}
 
-int ListEmpty(LinkList *l)
-{
-	if(l->length==0)
-		return 1;
-	else
-		return 0;
-}
-
-int ListLength(LinkList *l)
-{
-	return l->length;
-}
-
-void Getp(LinkList *l,int i,int *e)
-{
-	*e=l->p[i-1];
-}
-int Locatp(LinkList *l,int e)
-{
-	int i;
-	for(i=0;i<l->length;i++)
-		if(l->p[i]==e)
-			return i+1;
-	return 0;
-}
 
 void ListDelete(LinkList *l,int k,int *e)  //  将第k个数删除
 {
