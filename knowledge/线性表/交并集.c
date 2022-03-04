@@ -93,6 +93,8 @@ void Qbingji(LinkList *la,LinkList *lb)
 			Listinsert_LL(la,++length_a,e);
 	}
 }
+
+
 void Qbingji1(LinkList *la,LinkList *lb)
 {
 	int i,j;
@@ -105,6 +107,41 @@ void Qbingji1(LinkList *la,LinkList *lb)
 		{
 			la->p[la->length]=lb->p[i];
 			la->length++;
+		}
+	}
+}
+
+
+void Qjiaoji(LinkList *la,LinkList *lb)
+{
+	int length_b=ListLength(lb),i,e;
+	for(i=1;i<=length_b;i++)
+	{
+		Getp(lb,i,&e);
+		if(Locatp(la,e)==0)
+		{
+			ListDelete(lb,i,&e);
+			i--;
+			length_b--;
+		}
+	}
+}
+
+
+void Qjiaoji1(LinkList *la,LinkList *lb)
+{
+	int i,j,k;
+	for(i=0;i<lb->length;i++)
+	{
+		for(j=0;j<la->length;j++)
+			if(la->p[j]==lb->p[i])
+				break;
+		if(j>=la->length)
+		{
+			for(k=j;k<=lb->length-2;k++)
+				lb->p[k]=lb->p[k+1];
+			lb->length--;
+			i--;
 		}
 	}
 }
