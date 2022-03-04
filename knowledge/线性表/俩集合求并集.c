@@ -61,6 +61,12 @@ void PrintList(LinkList *l)
 }
 
 
+int ListLength(LinkList *l)
+{
+	return l->length;
+}
+
+
 void Getp(LinkList *l,int i,int *e)
 {
 	*e=l->p[i-1];
