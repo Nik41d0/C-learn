@@ -103,8 +103,6 @@ void Qbingji(LinkList *la,LinkList *lb)
 			Listinsert_LL(la,++length_a,e);
 	}
 }
-
-
 void Qbingji1(LinkList *la,LinkList *lb)
 {
 	int i,j;
@@ -136,8 +134,6 @@ void Qjiaoji(LinkList *la,LinkList *lb)
 		}
 	}
 }
-
-
 void Qjiaoji1(LinkList *la,LinkList *lb)
 {
 	int i,j,k;
@@ -155,6 +151,7 @@ void Qjiaoji1(LinkList *la,LinkList *lb)
 		}
 	}
 }
+
 
 
 int  main()
