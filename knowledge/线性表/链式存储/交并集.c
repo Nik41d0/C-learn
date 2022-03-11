@@ -190,5 +190,7 @@ int main()
 	PRINTLIST(hd2);
 	Qbingji1(hd1,hd2);
 	PRINTLIST(hd1);
+	//Qjiaoji(hd1,hd2);
+	//PRINTLIST(hd2);
 	return 0;
 }
