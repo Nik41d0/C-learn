@@ -30,20 +30,6 @@ void CREALIST(LinkList *hd)
 		scanf("%d",&dt);
 	}
 }
-void CREALIST1(LinkList *hd)
-{
-	int dt;
-	LinkList *r=hd;
-	scanf("%d",&dt);
-	while(dt!=-1)
-	{
-		LinkList *p=(LinkList *)malloc(sizeof(LinkList));
-		p->data=dt;
-		p->next=NULL;
-		r->next=p;
-		scanf("%d",&dt);
-	}
-}
 
 
 void PRINTLIST(LinkList *hd)
@@ -82,25 +68,6 @@ int Getelem(LinkList *hd,int i,int *e)
 	if(p!=NULL&&j==i)
 	{
 		*e=p->data;
-		return 1;
-	}
-	return 0;
-}
-int Getelem1(LinkList *hd,int i, int *e)
-{
-	int j=1;
-	LinkList *p=hd;
-	while(p->next!=NULL&&j<i)
-	{
-		p=p->next;
-		j++;
-	}
-	if(p->next!=NULL&&j==i)
-	{
-		LinkList *q=p->next;
-		p->next=q->next;
-		*e=q->data;
-		free(q);
 		return 1;
 	}
 	return 0;
@@ -181,6 +148,30 @@ void Qbingji1(LinkList *la,LinkList *lb)
 		Getelem(lb,i,&e);
 		if(locatelem(la,e)==0)
 			insertelem(la,++length_a,e);
+	}
+}
+
+void Qjiaoji(LinkList *la,LinkList *lb)
+{
+	LinkList *pb=lb,*pa=NULL,*pr=NULL;
+	while(pb->next!=NULL)
+	{
+		pa=la->next;
+		while(pa!=NULL)
+		{
+			if(pb->next->data==pa->data)
+				break;
+			pa=pa->next;
+		}
+	
+	if(pa==NULL)
+	{
+		pr=pb->next;
+		pb->next=pr->next;
+		free(pr);
+	}
+	else
+		pb=pb->next;
 	}
 }
 
