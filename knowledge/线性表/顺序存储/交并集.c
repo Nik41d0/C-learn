@@ -32,7 +32,7 @@ int Listinsert_LL(LinkList *l,int k,int e)
 		int i,*newp=(int*)malloc((l->listsize+LIST_ADD)*sizeof(int));
 		if(!newp)
 			return 0;
-		for(i=0;l->length;i++)
+		for(i=0;i<l->length;i++)
 			newp[i]=l->p[i];
 		free(l->p);
 		l->p=newp;
