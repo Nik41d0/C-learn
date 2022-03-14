@@ -164,14 +164,17 @@ int  main()
 		Listinsert_LL(&la,i,i);
 	PrintList(&la);
 	printf("\n");
+	
 	for(i=1;i<=8;i++)
 		Listinsert_LL(&lb,i,2*i);
 	PrintList(&lb);
 	printf("\n");
+	
 	Qbingji(&la,&lb);
-	//Qbingji(&la,&lb);
+	//Qbingji1(&la,&lb);
 	PrintList(&la);
 	printf("\n");
+	
 	DestroyList(&la);
 	DestroyList(&lb);
 	return 0;
