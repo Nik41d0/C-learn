@@ -70,7 +70,7 @@ void PrintList(LinkList *l)
 }
 
 
-void ListDelete(LinkList *l,int k,int *e)  //  将第k个数删除
+void ListDelete(LinkList *l,int k,int *e)  //  将第k个数删除，*e 保存要删除的元素
 {
 	int i;
 	*e=l->p[k-1];
