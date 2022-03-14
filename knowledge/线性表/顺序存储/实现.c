@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+
 #define LIST_SIZE 100  // 线性表的初始长度
 #define LIST_ADD 10     // 线性表的长度增量
 
@@ -38,8 +40,8 @@ int Listinsert_LL(LinkList *l,int k,int e)  // 在线性表中在第k位置插�
 		free(l->p);
 		l->p=newp;
 	}
-	b=&(l->p[k-1]);
-	for(a=&l->p[l->length-1];a>=b;a--)
+	b=&(l->p[k-1]);  // 这里的 k-1 为下标，相当于第 k 个位置
+	for(a=&l->p[l->length-1];a>=b;a--)	// length-1 也为下标，同上
 		*(a+1)=*a;
 	*b=e;
 	l->length++;
@@ -53,7 +55,7 @@ void DestroyList(LinkList *l) //清空线性表
 }
 
 
-void ClearList(LinkList *l)  // 伪清空，仅是把空间个数设为0
+void ClearList(LinkList *l)  // 伪清空，仅是把空间中的元素个数设为0
 {
 	l->length=0;
 }
@@ -63,7 +65,7 @@ void PrintList(LinkList *l)
 {
 	int i=0;
 	while(i<l->length)
-		printf("%d ",l->p[i++]);
+		printf("%d ",l->p[i++]);  // 下标 i 为 length -1 时，所对应的为 最后一个 元素
 	printf("\n");
 }
 
@@ -76,6 +78,7 @@ void ListDelete(LinkList *l,int k,int *e)  //  将第k个数删除
 		l->p[i-1]=l->p[i];
 	l->length--;
 }
+
 
 int  main()
 {
