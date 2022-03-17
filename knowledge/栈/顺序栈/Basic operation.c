@@ -98,6 +98,23 @@ void stacktraverse(sqstack *s)   // 遍历栈
 }
 
 
+void conversion(sqstack *sq,int n,int jz,char s[])    // 进制转换，16 进制不行
+{
+	int e,i=0;
+	while(n)
+	{
+		push(sq,n%jz);
+		n=n/jz;
+	}
+	while(!stackempty(sq))
+	{
+		pop(sq,&e);
+		s[i]=e+'0';
+		i++;            
+	}
+	s[i]='\0';
+}
+
 int main()
 {
 	sqstack sq;
