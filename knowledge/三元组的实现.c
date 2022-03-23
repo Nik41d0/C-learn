@@ -62,8 +62,8 @@ void syzzz(tsmat *s,tsmat *k)  //三元组转置，以目的数组为基准
 			for(p=1;p<=s->tu;p++)
 				if(s->data[p].j==m)
 				{
-					k->data[q].i=s->data[p].i;
-					k->data[q].j=s->data[p].j;
+					k->data[q].i=s->data[p].j;
+					k->data[q].j=s->data[p].i;
 					k->data[q].e=s->data[p].e;
 					q++;
 				}
@@ -81,7 +81,7 @@ void syzzzd(tsmat *s,tsmat *k)   //三元组转置，以原数组为基准
 			num[i]=0;
 		for(i=1;i<=s->tu;i++)
 			num[s->data[i].j]++;
-		copt[i]=1;
+		copt[1]=1;
 		for(i=2;i<=s->nu;i++)
 			copt[i]=copt[i-1]+num[i-1];
 		for(i=1;i<=s->tu;i++)
