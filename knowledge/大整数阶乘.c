@@ -8,7 +8,7 @@ int main()
 	printf("请输入n的值:");
 	scanf("%d",&n);
 	a[0]=1;
-	for(i=1;i<=n;i++)
+	for(i=2;i<=n;i++)
 	{
 		for(j=1,jw=0;j<=ws;j++)  // 每次循环初始化 进位 的值
 		{
@@ -17,9 +17,10 @@ int main()
 			jw=t/10;
 		}
 		while(jw)  // 判断是否进位
-		{   ++ws;
-	        a[ws-1]=jw%10;
-			jw/=10;
+		{
+			++ws;
+	        	a[ws-1]=jw%10;
+			jw/=10;  // 看是否还需再次进位
 		}
 	}
 	for(j=ws-1;j>=0;j--)
