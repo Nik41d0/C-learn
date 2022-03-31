@@ -65,17 +65,17 @@ void blz(bitnode *t)
 {
 	if(t)
 	{
-		blx(t->lchild);
+		blz(t->lchild);
 		printf("%d ",t->data);
-		blx(t->rchild);
+		blz(t->rchild);
 	}
 }
 void blh(bitnode *t)
 {
 	if(t)
 	{
-		blx(t->lchild);
-		blx(t->rchild);
+		blh(t->lchild);
+		blh(t->rchild);
 		printf("%d ",t->data);
 	}
 }
