@@ -1,11 +1,14 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define MAX 40
+
 typedef struct bitnode
 {
 	int data;
 	struct bitnode *lchild,*rchild;
 }bitnode,*bitree;   
+
+
 int a[17]={1,2,3,0,0,7,0,0,8,0,0},a_i=0;
 void create_sz(bitree *T)
 {
@@ -23,6 +26,7 @@ void create_sz(bitree *T)
 		create_sz(&(*T)->rchild);
 	}
 }
+
 
 void ccbl(bitree t)    //  bitree 相当于 *bitnode,下同
 {
@@ -50,6 +54,8 @@ void ccbl(bitree t)    //  bitree 相当于 *bitnode,下同
 		}
 	}
 }
+
+
 void freetree(bitree t)
 {
 	if(t!=NULL)
@@ -59,6 +65,7 @@ void freetree(bitree t)
 		free(t);
 	}
 }
+
 
 int main()
 {
