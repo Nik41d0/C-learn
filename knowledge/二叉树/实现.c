@@ -34,6 +34,7 @@ bitnode *create1()
 	}
 	return T;
 }
+
 int a[17]={1,2,0,0,3,0,0},a_i=0;
 void create_sz(bitnode **T)
 {
@@ -51,6 +52,7 @@ void create_sz(bitnode **T)
 		create_sz(&(*T)->rchild);
 	}
 }
+
 
 void blx(bitnode *t)
 {
