@@ -1,10 +1,13 @@
 #include<stdio.h>
 #include<stdlib.h>
+
 typedef struct bitnode
 {
 	int data;
 	struct bitnode *lchild,*rchild;
 }bitnode,*bitree;
+
+
 int a[]={1,2,4,5,0,0,0,6,7,0,0,0,3,8,0,0,9,0,0},a_i=0;
 void create_sz(bitree *T)
 {
@@ -22,12 +25,15 @@ void create_sz(bitree *T)
 		create_sz(&(*T)->rchild);
 	}
 }
+
+
 typedef struct
 {
 	bitree data[60];
 	int bz[60];
 	int top;
 }stackh;
+
 void pushh(stackh *st,bitree tp,int bz)
 {
 	if(st->top==60-1)
@@ -39,6 +45,7 @@ void pushh(stackh *st,bitree tp,int bz)
 		st->bz[st->top]=bz;
 	}
 }
+
 void poph(stackh *st,bitree *tp,int *bz)
 {
 	if(st->top==-1)
@@ -50,6 +57,8 @@ void poph(stackh *st,bitree *tp,int *bz)
 		st->top--;
 	}
 }
+
+
 void freetree(bitree t)
 {
 	if(t!=NULL)
@@ -59,7 +68,9 @@ void freetree(bitree t)
 		free(t);
 	}
 }
-void blhfd(bitree t)
+
+
+void blhfd(bitree t)   //非递归后序
 {
 	stackh s;
 	int tag;
@@ -89,7 +100,9 @@ void blhfd(bitree t)
 		}
 	}
 }
-void blh(bitree t)
+
+
+void blh(bitree t)       //递归后序
 {
 	if(t)
 	{
@@ -98,6 +111,8 @@ void blh(bitree t)
 		printf("%d ",t->data);
 	}
 }
+
+
 int main()
 {
 	bitnode *t=NULL;
