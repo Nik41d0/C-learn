@@ -1,10 +1,13 @@
 #include<stdio.h>
 #include<stdlib.h>
+
 typedef struct bitnode
 {
 	int data;
 	struct bitnode *lchild,*rchild;
 }bitnode,*bitree;
+
+
 int a[]={1,2,4,5,0,0,0,6,7,0,0,0,3,8,0,0,9,0,0},a_i=0;
 void create_sz(bitree *T)
 {
@@ -22,23 +25,25 @@ void create_sz(bitree *T)
 		create_sz(&(*T)->rchild);
 	}
 }
+
+
 typedef struct
 {
 	bitree data[60];
 	int top;
 }stack;
+
 void push(stack *st,bitree tp)
 {
 	if(st->top==60-1)
-	{
 		printf("overflow");
-	}
 	else
 	{
 		st->top++;
 		st->data[st->top]=tp;
 	}
 }
+
 bitree pop(stack *st)
 {
 	bitree p;
@@ -52,10 +57,11 @@ bitree pop(stack *st)
 		p=st->data[st->top];
 		st->top--;
 		return p;
-		
 	}
 }
-void blxfd(bitree t)
+
+
+void blxfd(bitree t)  //非递归先序
 {
 	stack s;
 	s.top=-1;
@@ -74,7 +80,18 @@ void blxfd(bitree t)
 		}
 	}
 }
-void blzfd(bitree t)
+void blx(bitnode *t)     //递归先序
+{
+	if(t)
+	{
+		printf("%d ",t->data);
+		blx(t->lchild);
+		blx(t->rchild);
+	}
+}
+
+
+void blzfd(bitree t)   // 非递归中序
 {
 	stack s;
 	s.top=-1;
@@ -93,6 +110,17 @@ void blzfd(bitree t)
 		}
 	}
 }
+void blz(bitnode *t)  //  递归中序
+{
+	if(t)
+	{
+		blz(t->lchild);
+		printf("%d ",t->data);
+		blz(t->rchild);
+	}
+}
+
+
 void freetree(bitree t)
 {
 	if(t!=NULL)
@@ -102,24 +130,8 @@ void freetree(bitree t)
 		free(t);
 	}
 }
-void blx(bitnode *t)
-{
-	if(t)
-	{
-		printf("%d ",t->data);
-		blx(t->lchild);
-		blx(t->rchild);
-	}
-}
-void blz(bitnode *t)
-{
-	if(t)
-	{
-		blz(t->lchild);
-		printf("%d ",t->data);
-		blz(t->rchild);
-	}
-}
+
+
 int main()
 {
 	bitnode *t=NULL;
