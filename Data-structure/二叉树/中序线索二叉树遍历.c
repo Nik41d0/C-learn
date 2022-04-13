@@ -9,7 +9,7 @@ typedef struct bithrnode
 }bithrnode,*bithree;
 
 int a[20]={1,2,4,0,0,5,0,0,3,6,0,0,7,0,0},a_i=0;
-void create(bithree *T)
+void create(bithree *T)   // 左右孩子线索标志均设置为 0
 {
 	if(a[a_i]==0)
 	{
@@ -29,12 +29,12 @@ void create(bithree *T)
 }
 
 
-bithree pre;
-void inthreading(bithree p)
+bithree pre;  // 全局变量，只想最前一节点
+void inthreading(bithree p) // 中序线索化
 {
 	if(p!=NULL)
 	{
-		inthreading(p->lchild);
+		inthreading(p->lchild); // 递归处理左子树
 		if(p->lchild==NULL)
 		{
 			p->ltag=1;
@@ -51,7 +51,7 @@ void inthreading(bithree p)
 }
 
 
-void blzxs(bithree T)
+void blzxs(bithree T) // 正序中序遍历二叉树
 {
 	bithree p=T->lchild;
 	while(p!=T)
@@ -68,7 +68,7 @@ void blzxs(bithree T)
 	}
 }
 
-void blzxs_nx(bithree T)
+void blzxs_nx(bithree T)  // 逆序
 {
 	bithree p=T->rchild;
 	while(p!=T)
@@ -103,7 +103,7 @@ int main()
 	create(&t);
 	blz(t);
 	printf("\n");
-	s=(bithree)malloc(sizeof(bithrnode));
+	s=(bithree)malloc(sizeof(bithrnode));   // 附加头节点
 	s->ltag=0;
 	s->rtag=1;
 	s->rchild=s;
@@ -111,12 +111,12 @@ int main()
 		s->lchild=s;
 	else
 	{
-		s->lchild=t;
-		pre=s;
-		inthreading(t);
-		pre->rchild=s;
-		pre->rtag=1;
-		s->rchild=pre;
+		s->lchild=t;      // 左孩子指向二叉树 t 的根
+		pre=s;		//  pre 前一节点指向新创建的附加节点 s
+		inthreading(t);   
+		pre->rchild=s;      // t 树处理最后一节点的右子树指向附加节点
+		pre->rtag=1;		
+		s->rchild=pre;	   // 附加节点的右孩子指向最后处理节点
 	}
 	blzxs(s);
 	printf("\n");
@@ -124,7 +124,8 @@ int main()
 	return 0;
 }
 /*
-pre=inthreading_loc(t,pre);
+
+pre=inthreading_loc(t,pre);    //局部变量添加线索
 bithree inthreading_loc(bithree t,bithree pre)
 {
 	if(t)
@@ -149,4 +150,5 @@ bithree inthreading_loc(bithree t,bithree pre)
 	}
 	return pre;
 }
+
 */
