@@ -56,34 +56,36 @@ void tjzf(char *a,hfms *s)	// 将字符串 a 添加到哈夫曼树节点数组
 	}
 	i=0;
 	p=hd->next;
-	while(p!=NULL)
+	while(p!=NULL)	// 计算链表长度
 	{
 		i++;
 		p=p->next;
 	}
-	s->num_yz=i;
+	s->num_yz=i;	// 哈夫曼树叶子节点数 = 链表长度
 	s->arr=(snode *)malloc(sizeof(snode)*(s->num_yz*2-1));
+	// 开辟空间，空间大小/节点个数为：2*n0-1
 	p=hd->next;
 	i=0;
 	while(p!=NULL)
 	{
+		// 将链表中个节点的数据存入数组中
 		s->arr[i].c=p->c;
 		s->arr[i].qz=p->qz;
 		strcpy(s->arr[i].bm,"");
-		s->arr[i].lchild=-1;
+		s->arr[i].lchild=-1;	
 		s->arr[i].rchild=-1;
-		s->arr[i].bz=1;
+		s->arr[i].bz=1; 	// 权在数列中
 		p=p->next;
 		i++;
 	}
-	for(;i<s->num_yz*2-1;i++)
+	for(;i<s->num_yz*2-1;i++)	// 对剩余节点初始化
 	{
 		s->arr[i].c='\0';
 		s->arr[i].qz=0;
 		strcpy(s->arr[i].bm,"");
 		s->arr[i].lchild=-1;
 		s->arr[i].rchild=-1;
-		s->arr[i].bz=0;
+		s->arr[i].bz=0;		// 权不在数列中
 	}
 	p=hd->next;
 	while(p!=NULL)
@@ -96,21 +98,22 @@ void tjzf(char *a,hfms *s)	// 将字符串 a 添加到哈夫曼树节点数组
 }
 
 
-void js(hfms s)
+void js(hfms s)		// 创建哈夫曼树
 {
 	int i,min1xb,min2xb,minxb,minz,k;
 	for(k=s.num_yz;k<s.num_yz*2-1;k++)
 	{
+	// 对未存储字符的节点存入数据，权值越大，在数组中位置越靠后
 		minxb=-1;
 		minz=MAX;
 		for(i=0;i<s.num_yz*2-1;i++)
 			if(s.arr[i].bz==1&&s.arr[i].qz<minz)
 			{
-				minz=s.arr[i].qz;
-				minxb=i;
+				minz=s.arr[i].qz;	// 将权数列中最小权值赋值 minz
+				minxb=i;		// 将权数列中最小权值所属的下标赋值 minb
 			}
 		min1xb=minxb;
-		s.arr[min1xb].bz=0;
+		s.arr[min1xb].bz=0;	// 将最小权值所属元素移除
 		minxb=-1;
 		minz=MAX;
 		for(i=0;i<s.num_yz*2-1;i++)
@@ -122,28 +125,29 @@ void js(hfms s)
 		min2xb=minxb;
 		s.arr[min2xb].bz=0;
 		s.arr[k].qz=s.arr[min1xb].qz+s.arr[min2xb].qz;
-		s.arr[k].bz=1;
+		s.arr[k].bz=1;		// 将该节点添加进权数列
 		s.arr[k].lchild=min1xb;
 		s.arr[k].rchild=min2xb;
 	}
 }
 
 
-void bm(hfms s,int xb,char cc[30],int t)
-{
-	if(t==0)
+void bm(hfms s,int xb,char cc[30],int t)	// 先序遍历进行编码
+{	
+	if(t==0)	// 若该节点为父亲节点的左孩子
 	{
+		// 先将父亲节点 bm 赋给该节点 bm，后再该节点的 bm 后加 0
 		strcat(s.arr[xb].bm,cc);
 		strcat(s.arr[xb].bm,"0");
 	}
-	else if(t==1)
+	else if(t==1)		// 若该节点为父亲节点的右孩子
 	{
 		strcat(s.arr[xb].bm,cc);
 		strcat(s.arr[xb].bm,"1");
 	}
-	if(s.arr[xb].lchild!=-1)
+	if(s.arr[xb].lchild!=-1)	// 若左孩子存在，则传入编码 0
 		bm(s,s.arr[xb].lchild,s.arr[xb].bm,0);
-	if(s.arr[xb].rchild!=-1)
+	if(s.arr[xb].rchild!=-1)	// 若右孩子存在，则传入编码 1
 		bm(s,s.arr[xb].rchild,s.arr[xb].bm,1);
 }
 
