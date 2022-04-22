@@ -2,35 +2,39 @@
 #include<stdlib.h>
 #include<string.h>
 #define MAX 999999
-typedef struct node
+	
+typedef struct node	// 定义哈夫曼树节点的结构
 {
 	char c;
 	int qz;
 	char bm[30];
 	int lchild,rchild,bz;
+	// bz 为 1 时表示在权值数列中，为 0 时则表示不在权数列中
+	// lchild、rchild 存储节点左右孩子在数组中的下标
 }snode;
-typedef struct sz
+typedef struct sz	// 定义数组存储的哈夫曼树
 {
-	snode *arr;
-	int num_yz;
+	snode *arr;	// 指向节点数组的指针
+	int num_yz;	// 哈夫曼树叶子节点个数
 }hfms;
-typedef struct cnode
+typedef struct cnode	// 定义链表存储的节点
 {
 	char c;
 	int qz;
 	struct cnode *next;
-}hcnode;
+}hcnode;	
 
-void tjzf(char *a,hfms *s)
+void tjzf(char *a,hfms *s)	// 将字符串 a 添加到哈夫曼树节点数组
 {
 	int i=0;
 	hcnode *hd=(hcnode *)malloc(sizeof(hcnode)),*p;
 	hd->next=NULL;
-	while(a[i]!='\0')
+	while(a[i]!='\0')	// 统计 a 中字符，创建链表存储字符并计算权值
 	{
 		p=hd->next;
 		while(p!=NULL)
-		{
+		{	
+			// 当链表中存在存储字符 a[i] 的节点，则该节点的 qz+1
 			if(p->c==a[i])
 			{
 				p->qz++;
@@ -39,11 +43,13 @@ void tjzf(char *a,hfms *s)
 			p=p->next;
 		}
 		if(p==NULL)
-		{
+		{	
+			// 若 p 为空，即当前链表中无存储字符 a[i] 的节点
+			// 则开辟一个空间 t ，将 a[i] 存入 t->c qz=1
 			hcnode *t=(hcnode *)malloc(sizeof(hcnode));
 			t->c=a[i];
 			t->qz=1;
-			t->next=hd->next;
+			t->next=hd->next; 	// 前插法将 t 插入链表
 			hd->next=t;
 		}
 		i++;
