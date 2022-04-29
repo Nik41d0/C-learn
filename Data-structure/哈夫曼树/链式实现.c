@@ -119,8 +119,10 @@ void freetree(hnode *t)   // 释放二叉树节点空间
 
 int main()
 {
-	char a[200]="jdawlkjfajowiadjoawjfaoiwfjawiwafawf";
+	char a[200];
 	hnode *head,*p,*hd=(hnode *)malloc(sizeof(hnode));
+	printf("请输入要创建的哈夫曼树:");
+	scanf("%s",a);
 	head=tjzf(a);
 	hd->nt=head->nt;
 	select(head);
@@ -128,7 +130,7 @@ int main()
 	p=hd->nt;
 	while(p!=NULL)
 	{
-		printf("%c:%d:%s\n",p->c,p->qz,p->bm);    // 打印各叶子节点的 字符、权值、编码
+		printf("字符:%c  权值:%d  编码:%s\n",p->c,p->qz,p->bm);    // 打印各叶子节点的 字符、权值、编码
 		p=p->nt;
 	}
 	freetree(head->next);
@@ -136,3 +138,4 @@ int main()
 	free(hd);
     	return 0;
 }
+
