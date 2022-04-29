@@ -155,13 +155,15 @@ void bm(hfms s,int xb,char cc[30],int t)	// 先序遍历进行编码
 int main()
 {
 	int i;
-	char a[200]="jdawlkjfajowiadjoawjfaoiwfjawiwafawf";
+	char a[200]=;
+	printf("请输入要创建的哈夫曼树:");
+	scanf("%s",a);
 	hfms s;
 	tjzf(a,&s);
 	js(s);
 	bm(s,s.num_yz*2-1-1,"",-1);
 	for(i=0;i<=s.num_yz-1;i++)
-		printf("%c:%d:%s\n",s.arr[i].c,s.arr[i].qz,s.arr[i].bm);
+		printf("字符:%c  权值:%d  编码:%s\n",s.arr[i].c,s.arr[i].qz,s.arr[i].bm);
 	free(s.arr);
     return 0;
 }
