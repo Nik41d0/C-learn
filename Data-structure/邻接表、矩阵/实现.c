@@ -2,6 +2,8 @@
 #include<stdlib.h>
 #define VEXNUM 6
 #define INF 9999 // 无穷大
+
+
 struct Graph    // 通用图形定义，创建图形的邻接矩阵和邻接表(全局变量)
 {
 	int vexnum,arcnum,kind;     // 顶点数、边数、图形类:1234-无向图、有向图、无向网、有向网
@@ -16,6 +18,8 @@ typedef struct MGraph_Mat   // 图的邻接矩阵存储数据定义
 	int arcs[VEXNUM][VEXNUM];       // 邻接矩阵
 	int kind;       // 图类型
 }MGraph_Mat;
+
+
 void create_Mat(MGraph_Mat *g)      // 创建图的邻接矩阵
 {
 	int i,j;
@@ -52,6 +56,8 @@ void create_Mat(MGraph_Mat *g)      // 创建图的邻接矩阵
 			g->arcs[graph.arcs[i*3]][graph.arcs[i*3+1]]=graph.arcs[i*3+2];
 	}
 }
+
+
 void print_Mat(MGraph_Mat g)    // 显示邻接矩阵
 {
 	int i,j;
@@ -77,6 +83,8 @@ void print_Mat(MGraph_Mat g)    // 显示邻接矩阵
 		printf("\n");
  	}
 }
+
+
 typedef struct arcnode  // 邻接表-边节点
 {
 	int adjvex,weight;  // 邻接边下标、权值
@@ -93,6 +101,8 @@ typedef struct MGraph_Adj   // 图的邻接表存储数据定义
 	struct vexnode vexarr[VEXNUM];  // 定点节点数组
 	int kind;       // 图类型
 }MGraph_Adj;
+
+
 void create_Adj(MGraph_Adj *g)      // 根据全局通用图形定义graph，创建图的邻接表
 {
 	int i;
@@ -122,6 +132,8 @@ void create_Adj(MGraph_Adj *g)      // 根据全局通用图形定义graph，创
 		}
 	}
 }
+
+
 void print_Adj(MGraph_Adj g)    // 显示邻接表
 {
 	int i;
@@ -142,6 +154,8 @@ void print_Adj(MGraph_Adj g)    // 显示邻接表
 		printf("\n");
 	}
 }
+
+
 int main()
 {
 	struct MGraph_Mat g;
@@ -153,3 +167,4 @@ int main()
 	
 	return 0;
 }
+
