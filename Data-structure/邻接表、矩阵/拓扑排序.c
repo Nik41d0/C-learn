@@ -220,11 +220,11 @@ int main()
 	struct MGraph_Adj g1;
 	create_Mat(&g);
 	print_Mat(g);
-  TopSort_Mat(g);
+  	TopSort_Mat(g);
   
 	create_Adj(&g1);
 	print_Adj(g1);
-  TopSort_Adj(g1);
+  	TopSort_Adj(g1);
 	
 	return 0;
 }
