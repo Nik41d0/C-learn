@@ -159,52 +159,54 @@ void print_Adj(MGraph_Adj g)    // 显示邻接表
 void TopSort_Mat(MGraph_Mat g)
 {
 	int i,j,k;
-	int in[VEXNUM];
-	for(i=0;i<=g.vexnum-1;i++)
+	int in[VEXNUM]; // 数组in用于统计各顶点入度
+	for(i=0;i<=g.vexnum-1;i++)  // 各顶点入度数组各元素值初始化0
 		in[i]=0;
-
-	for(i=0;i<=g.vexnum-1;i++)
-		for(j=0;j<=g.vexnum-1;j++)
+    printf("此邻接矩阵的拓扑排序为:");
+	for(i=0;i<=g.vexnum-1;i++)  // 矩阵行
+		for(j=0;j<=g.vexnum-1;j++)  // 矩阵列
 			if(g.arcs[i][j]!=0&&g.arcs[i][j]!=INF)
-				in[j]++;
+				in[j]++;    // 统计各顶点(列)入度
 
-	for(i=0;i<=g.vexnum-1;i++)
-		for(j=0;j<=g.vexnum-1;j++)
-			if(in[j]==0)
+	for(i=0;i<=g.vexnum-1;i++)  // 顶点个数-拓扑显示次数
+		for(j=0;j<=g.vexnum-1;j++)  // 遍历各顶点入度in数组
+			if(in[j]==0)    // 若某顶点入度为0
 			{
-				printf(" %c",g.vexs[j]);
+				printf("%c ",g.vexs[j]);
 				in[j]=-1;
-				for(k=0;k<=g.vexnum-1;k++)
+				for(k=0;k<=g.vexnum-1;k++)  // 删除所有从该顶点发出的边-该列所有边入度-1
 					if(g.arcs[j][k]!=0&&g.arcs[j][k]!=INF)
 						in[k]--;
 				break;
 			}
 }
 
+
 void TopSort_Adj(MGraph_Adj g)
 {
 	int i,j;
-	int in[VEXNUM];
+	int in[VEXNUM]; // 数组in用于统计各顶点入度
 	arcnode *p=NULL;
-	for(i=0;i<=g.vexnum-1;i++)
+	for(i=0;i<=g.vexnum-1;i++)  // 各顶点入度数组各元素值初始化0
 		in[i]=0;
-	for(i=0;i<=g.vexnum-1;i++)
+	printf("此邻接表的拓扑排序为:");
+	for(i=0;i<=g.vexnum-1;i++)  // 循环各顶点数组
 	{
 		p=g.vexarr[i].firstarc;
-		while(p)
+		while(p)    // 循环边表各节点
 		{
-			in[p->adjvex]++;
+			in[p->adjvex]++;    // 统计各顶点入度
 			p=p->nextarc;
 		}
 	}
-	for(i=0;i<=g.vexnum-1;i++)
-		for(j=0;j<=g.vexnum-1;j++)
-			if(in[j]==0)
+	for(i=0;i<=g.vexnum-1;i++)  // 选出-出点n次
+		for(j=0;j<=g.vexnum-1;j++)  // 遍历各顶点入度in数组
+			if(in[j]==0)    // 若某顶点入度为0
 			{
-				printf(" %c",g.vexarr[j].vexdata);
+				printf("%c ",g.vexarr[j].vexdata);
 				in[j]=-1;
 				p=g.vexarr[j].firstarc;
-				while(p!=NULL)
+				while(p!=NULL)  // 删除所有从该顶点发出的边-遍历该顶点边表各节点入度-1
 				{
 					in[p->adjvex]--;
 					p=p->nextarc;
