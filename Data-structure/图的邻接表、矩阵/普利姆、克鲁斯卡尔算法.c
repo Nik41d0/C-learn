@@ -159,12 +159,26 @@ void print_Adj(MGraph_Adj g)    // 显示邻接表
 
 int main()
 {
-	struct MGraph_Mat g;
-	struct MGraph_Adj g1;
+	MGraph_Mat g;
+	MGraph_Adj g1;
 	create_Mat(&g);
 	print_Mat(g);
+	int sq;
+	
+	sq=prim_Mat(g,0);
+	printf("\n其生成树的权值和为:%d",sq);
+	
+	sq=krskl_Mat(g);
+	printf("\n其生成树的权值和为:%d",sq);
+	
 	create_Adj(&g1);
 	print_Adj(g1);
+	
+	sq=prim_Adj(g1,0);
+	printf("\n其生成树的权值和为:%d",sq);
+
+	sq=krskl_Adj(g1);
+	printf("\n其生成树的权值和为:%d",sq)
 	
 	return 0;
 }
