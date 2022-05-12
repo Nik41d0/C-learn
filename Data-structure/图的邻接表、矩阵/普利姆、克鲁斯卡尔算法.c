@@ -157,6 +157,209 @@ void print_Adj(MGraph_Adj g)    // 显示邻接表
 }
 
 
+int prim_Mat(MGraph_Mat g,int v)    // 图矩阵g，下标v点开始
+{
+	int lowcost[VEXNUM];    // 已选入T点到其他各点 权值数组
+	int mst[VEXNUM];    // 已选入T点到其他各点 下标数组
+	int i,j,min,minid,sum=0;
+	printf("邻接矩阵的普利姆算法为:");
+	for(i=0;i<=g.vexnum-1;i++)  // 选v点如T
+	{
+		lowcost[i]=g.arcs[v][i];    // 各顶点到v点距离(lowcost[i])
+		mst[i]=v;   // 各点到v点(i--mst[i])
+	}
+	for(i=1;i<=g.vexnum-1;i++)  // 循环选点-顶点个数减1次
+	{
+		min=INF;    // 最短距离初始化，为选最短作准备
+		minid=v;    // 最小点下标初始化
+		for(j=0;j<=g.vexnum-1;j++)  // 从权值数组找最小的
+			if(lowcost[j]<min&&lowcost[j]!=0)   // 有边且更小，则更新
+			{
+				min=lowcost[j]; // 最小权值
+				minid=j;    // 最小权值下标
+			}
+		printf("\n%d->%d=%d",mst[minid],minid,min);
+		sum+=min;   // 最小权值累加
+		lowcost[minid]=0;   // 将找到的最小边从最短距离数组删除
+		for(j=1+v;j<=g.vexnum-1+v;j++)  // minid点入T，不包括v
+		// 从新入T点minid里，更新最小权值数组及下标
+			if(g.arcs[minid][j%g.vexnum]<lowcost[j%g.vexnum])
+			{
+				lowcost[j%g.vexnum]=g.arcs[minid][j%g.vexnum];
+				// 从T内各点到其他各点最小权值数组
+				mst[j%g.vexnum]=minid;  // 从T内各点到其他个点最小权值对应的下标数组
+			}
+	}
+	return sum; // 最小生成树权值
+}
+
+int prim_Adj(MGraph_Adj g,int v)    // 图g邻接表，v下标点
+{
+	arcnode *p=NULL;
+	int lowcost[VEXNUM];
+	int mst[VEXNUM];
+	int i,j,min,minid,sum=0;
+	printf("邻接表的普利姆算法为:");
+	for(i=0;i<=g.vexnum-1;i++)
+	{
+		lowcost[i]=INF; // 各点到v的距离(lowcoast[i])，全部初始化为无穷
+		mst[i]=v;   // 各顶点到v点(i--mst[i])
+	}
+	p=g.vexarr[v].firstarc;
+	while(p)
+	{
+		lowcost[p->adjvex]=p->weight;   // 有边的更新距离
+		p=p->nextarc;
+	}
+	for(i=1;i<=g.vexnum-1;i++)  // 循环选点-顶点个数减1
+	{
+		min=INF;
+		minid=v;
+		for(j=0;j<=g.vexnum-1;j++)  // 从权值数组里找最小的
+			if(lowcost[j]<min&&lowcost[j]!=0)
+			{
+				min=lowcost[j]; // 最小权值
+				minid=j;    // 最小权值下标
+			}
+		printf("\n%d->%d=%d",mst[minid],minid,min); // 找到的最小权值点，点-点:距离
+		sum+=min;   // 最小权值累加
+		lowcost[minid]=0;   // 将找到的最小边从最短距离数组删除
+		p=g.vexarr[minid].firstarc; // minid点入T
+		while(p)    // 转到minid到其他各点
+		{
+			if((p->weight<lowcost[p->adjvex])&&(p->adjvex!=mst[p->adjvex]))
+			// 如果权值更小，且不是相同重复边
+			{
+				lowcost[p->adjvex]=p->weight;   // 更新最小权值
+				mst[p->adjvex]=minid;   // 更新最短权值下标
+			}
+			p=p->nextarc;
+		}
+	}
+	return sum;
+}
+
+
+typedef struct Edge
+{
+	int u;  // 边的起始顶点
+	int v;  // 边的起始终点
+	int w;  // 边的权值
+}Edge;  // 边类型-用于克鲁斯卡尔存储边/边排序/选边
+
+void Bubblesort(Edge R[],int e)
+// 冒泡排序，对数组R中e条边按权值递增排序，为克鲁斯卡尔选边准备
+{
+	Edge temp;
+	int i,j,swap;
+	for(i=0;i<=e-2;i++) // 进行e-1趟排序
+	{
+		swap=0;
+		for(j=0;j<=e-2-i;j++)
+			if(R[j].w>R[j+1].w) // 若前一元素比后一元素大
+			{
+				temp=R[j];
+				R[j]=R[j+1];
+				R[j+1]=temp;
+				swap=1; // 交换标志
+			}
+		if(swap==0)
+			break;  // 本次比较中未出现交换规则交换则结束排序
+	}
+}
+
+
+int krskl_Mat(MGraph_Mat g) // 在顶点为n的连接图中构造最小生成树，g邻接矩阵
+{
+	int i,j,v1,u1,sn1,sn2,k=0,sum=0;
+	int vest[VEXNUM];   // 集合数字vest判断两顶点间是否连通
+	Edge E[ARCNUM]; // E为边数组
+	printf("\n邻接矩阵的克鲁斯卡尔算法为:");
+	for(i=0;i<=g.vexnum-1;i++)
+		for(j=0;j<=i-1;j++) // 无向图对称，只处理左下三角
+			if(g.arcs[i][j]!=INF)   // 若有边
+			{
+				E[k].u=i;
+				E[k].v=j;
+				E[k].w=g.arcs[i][j];
+				k++;
+			}
+	Bubblesort(E,k);    // 用冒泡排序对数组E中的k条边按权值递增排序
+	for(i=0;i<g.vexnum;i++) // 初始化辅助数组
+		vest[i]=i;  // 给每个顶点之置不同连通分量编号，即初始时有n个连通分量
+	k=1;    // 表述当前构造的第n条边，初始值为1
+	j=0;    // E中元素的下标，初始值为0
+	while(k<=g.vexnum-1)    // 循环产生最小生成树的n-1条边，循环n-1次
+	{
+		u1=E[j].u;
+		v1=E[j].v;  // 取一条边的头尾顶点
+		sn1=vest[u1];
+		sn2=vest[v1];   // 分别取到这两个顶点所属的集合编号
+		if(sn1!=sn2)    // 两顶点分属于不同集合则该边为最小生成树的一条边
+		{
+			printf("\n%d->%d=%d",u1,v1,E[j].w);
+			sum+=E[j].w;    // 最小权值累加
+			k++;    // 生成的边数+1
+			for(i=0;i<=g.vexnum;i++)    // 两个集合统一编号，合并成一个集合
+				if(vest[i]==sn2)    // 集合编号sn2的第i号边其他编号改为sn1
+					vest[i]=sn1;
+		}   // 若属于同一集合不处理
+		j++;    // 扫描下一条最小边
+	}
+	return sum;
+}
+
+int krskl_Adj(MGraph_Adj g)
+{
+	int i,j,v1,u1,sn1,sn2,k=0,sum=0;
+	int vest[VEXNUM];   // 数组vest用于判断两顶点之间是否连通
+	Edge E[ARCNUM]; // E为边数组
+	arcnode *p=NULL;
+	printf("\n邻接表的克鲁斯卡尔算法为:");
+	for(i=0;i<=g.vexnum-1;i++)  // 循环顶点数
+	{
+		p=g.vexarr[i].firstarc;
+		while(p)    // 循环边表
+		{
+			for(j=0;j<=k-1;j++) // 循环已经加入边表的各边
+				if(E[j].u==p->adjvex&&E[j].v==i)    // 查找该边是否加过
+					break;  // 若加过则跳出
+			if(j==k)
+			{
+				E[k].u=i;
+				E[k].v=p->adjvex;
+				E[k].w=p->weight;
+				k++;    // 边表加入边个数
+			}
+			p=p->nextarc;
+		}
+	}
+	Bubblesort(E,k);    // 用冒泡排序对数组E中的k条边按权值递增排序
+	for(i=0;i<g.vexnum;i++) // 初始化辅助数组
+		vest[i]=i;  // 给每个顶点置不同连通分量，即初始时有n个连通分量
+	k=1;    // k表示当前构造生成树第n条边，初始值为1
+	j=0;    // j为数组E中元素的下标，初始值为0
+	while(k<g.vexnum)
+	{
+		u1=E[j].u;
+		v1=E[j].v;
+		sn1=vest[u1];   // 分别得到这两个顶点所属的集合编号
+		sn2=vest[v1];
+		if(sn1!=sn2)    // 两顶点分属于不同不同集合则该边为最小生成树的一条边
+		{
+			printf("\n%d->%d=%d",u1,v1,E[j].w);
+			sum+=E[j].w;
+			k++;    // 生成的边数+1
+			for(i=0;i<g.vexnum;i++) // 两个集合统一编号
+				if(vest[i]==sn2)    // 集合编号sn2的第i号边其他号改为sn1
+					vest[i]=sn1;
+		}
+		j++;    // 扫描下一条边
+	}
+	return sum;
+}
+
+
 int main()
 {
 	MGraph_Mat g;
