@@ -224,10 +224,19 @@ void qasl(BSTNode *t,int jdcs)  // jdcs-结点所在层
 	}
 }
 
+int gy(int a,int b)
+{
+	int i;
+	for(i=a<b?a:b;i>=1;i--)
+		if(a%i==0&&b%i==0)
+			return i;
+	return 1;
+}
 
 int main()
 {
 	int a[12]={5,2,7,6,9,12,1,3,4,8,10,11}; // RR-非根
+	int ys=1;
 	BSTNode *bst=NULL,*p=NULL;
 	bst=CreateBST(a,12);
 	InOrder(bst);
@@ -247,7 +256,8 @@ int main()
 	InOrder(bst);
 
 	qasl(bst,1);
-	printf("\n平均比较次数为:%d/%d",zbjcs,jdgs);
+	ys=gy(zbjcs,jdgs);
+	printf("\n平均比较次数为:%d/%d\n",zbjcs/ys,jdgs/ys);
 	FreeBST(bst);
 	return 0;
 }
