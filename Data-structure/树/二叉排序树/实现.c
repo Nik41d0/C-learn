@@ -236,7 +236,7 @@ int main()
 	InsertBST(&bst,16);
 	InOrder(bst);
 	printf("\n");
-	
+
 	p=SearchBST(bst,16);
 	if(p)
 		printf("\n找到了:%d\n",p->data);
@@ -246,11 +246,8 @@ int main()
 	DeleteBST(&bst,5);
 	InOrder(bst);
 
-
 	qasl(bst,1);
 	printf("\n平均比较次数为:%d/%d",zbjcs,jdgs);
 	FreeBST(bst);
-	
 	return 0;
 }
-
