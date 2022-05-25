@@ -74,28 +74,32 @@ void FreeBST(BSTNode *root) // 释放二叉排序树空间
 		free(root);
 	}
 }
+
+
 BSTNode *fat=NULL;
 int bz=0;
 BSTNode *IfBalance(BSTNode *root,int *h,int *hc)
+// 判断是否为平衡二叉树，若不平衡返回最小不平衡的根，h-高度，hc-平衡因子
 {
-	if(bz==1)
+	if(bz==1)   // 若找到最小不平衡子树，则直接返回
 		return NULL;
-	if(root!=NULL)
+	if(root!=NULL)  // 若传入子树根root不空
 	{
-		int lh,rh,lnhc,rnhc;
+		int lh,rh,lnhc,rnhc;    // lh-左子树高度，rh-右子树高度，lnhc-左子树平衡因子，rnhc-右子树平衡因子
 		BSTNode *phfl=IfBalance(root->lchild,&lh,&lnhc);
 		BSTNode *phfr=IfBalance(root->rchild,&rh,&rnhc);
-		*h=lh>rh?lh+1:rh+1;
+		// 先处理左右子树，相当于后序遍历
+		*h=lh>rh?lh+1:rh+1; // 当前树高度，用于返回上一层调用函数
 		*hc=lh-rh;
-		if(phfl)
+		if(phfl)    // 若左子树phfl不平衡
 		{
-			if(bz==0)
+			if(bz==0)   // 若没找到最小不平衡子树
 			{
-				fat=root;
-				bz=1;
+				fat=root;   // 保存最小不平衡子树(根)的父亲结点
+				bz=1;   // 标记找到最小不平衡子树
 			}
-			*hc=lnhc;
-			return phfl;
+			*hc=lnhc;   // 向上返回最小子树的平衡因子
+			return phfl;    // 向上返回最小子树(根)的指针
 		}
 		else if(phfr)
 		{
@@ -122,6 +126,8 @@ BSTNode *IfBalance(BSTNode *root,int *h,int *hc)
 		return NULL;
 	}
 }
+
+
 int qgd(BSTNode *t)
 {
 	if(t)
@@ -140,12 +146,13 @@ int qgd(BSTNode *t)
 
 
 void Bbt_Adjust(BSTNode **bst,BSTNode *pa,int hc)
+// 平衡二叉树调整，bst-整个树的根，pa-最小不平衡子树的根，hc-不平衡因子
 {
 	BSTNode *pb=NULL,*pc=NULL;
-	if(hc==2)
+	if(hc==2)   // LL型或LR型
 	{
 		pb=pa->lchild;
-		if(qgd(pb->lchild)-qgd(pb->rchild)==-1)
+		if(qgd(pb->lchild)-qgd(pb->rchild)==-1) // LR型
 		{
 			pc=pb->rchild;
 			pa->lchild=pc->rchild;
@@ -162,7 +169,7 @@ void Bbt_Adjust(BSTNode **bst,BSTNode *pa,int hc)
 					fat->rchild=pc;
 			}
 		}
-		else
+		else    // LL型
 		{
 			pa->lchild=pb->rchild;
 			pb->rchild=pa;
@@ -177,7 +184,7 @@ void Bbt_Adjust(BSTNode **bst,BSTNode *pa,int hc)
 			}
 		}
 	}
-	else if(hc==-2)
+	else if(hc==-2) // RR型或RL型
 	{
 		pb=pa->rchild;
 		if(qgd(pb->lchild)-qgd(pb->rchild)==1)
@@ -238,18 +245,27 @@ int gy(int a,int b)
 
 int main()
 {
+	//int a[12]={7,6,9,8,12,10}; //RR-根
 	int a[12]={5,2,7,6,9,12,1,3,4,8,10,11},h,hc; // RR-非根
-	BSTNode *bst=NULL,*p=NULL;
+	//int a[12]={7,6,19,11,22,12},h,hc; // RL-根
+	//int a[12]={5,3,2,4,1,7,6,19,11,12,22},h,hc;   // RL-非根
+	//int a[12]={27,19,11,22,12,32},h,hc;   // LL-根
+	//int a[12]={50,60,27,19,11,22,12,32},h,hc; // LL-非根
+	//int a[12]={27,19,11,22,32,23},h,hc;   // LR-根
+	//int a[12]={50,60,27,19,11,22,32,23},h,hc; LR-非根
 	int ys=1;
+	BSTNode *bst=NULL,*p=NULL;
 	bst=CreateBST(a,12);
 	InOrder(bst);
 	printf("\n");
+	
 	Fiorder(bst);
 	printf("\n");
+	
 	qasl(bst,1);
 	ys=gy(zbjcs,jdgs);
 	printf("\n平均比较次数为:%d/%d\n",zbjcs/ys,jdgs/ys);
-	
+
 	bz=0;
 	p=IfBalance(bst,&h,&hc);
 	while(p)
@@ -258,16 +274,18 @@ int main()
 		bz=0;
 		p=IfBalance(bst,&h,&hc);
 	}
+	
 	InOrder(bst);
 	printf("\n");
+	
 	Fiorder(bst);
 	printf("\n");
+	
 	zbjcs=0,jdgs=0;
 	qasl(bst,1);
 	ys=gy(zbjcs,jdgs);
 	printf("\n平均比较次数为:%d/%d",zbjcs/ys,jdgs/ys);
-
-	FreeBST(bst);
 	
+	FreeBST(bst);
 	return 0;
 }
