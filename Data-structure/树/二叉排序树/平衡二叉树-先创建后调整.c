@@ -78,8 +78,7 @@ void FreeBST(BSTNode *root) // 释放二叉排序树空间
 
 BSTNode *fat=NULL;
 int bz=0;
-BSTNode *IfBalance(BSTNode *root,int *h,int *hc)
-// 判断是否为平衡二叉树，若不平衡返回最小不平衡的根，h-高度，hc-平衡因子
+BSTNode *IfBalance(BSTNode *root,int *h,int *hc)	// 判断是否为平衡二叉树，若不平衡返回最小不平衡的根，h-高度，hc-平衡因子
 {
 	if(bz==1)   // 若找到最小不平衡子树，则直接返回
 		return NULL;
@@ -145,8 +144,7 @@ int qgd(BSTNode *t)
 }
 
 
-void Bbt_Adjust(BSTNode **bst,BSTNode *pa,int hc)
-// 平衡二叉树调整，bst-整个树的根，pa-最小不平衡子树的根，hc-不平衡因子
+void Bbt_Adjust(BSTNode **bst,BSTNode *pa,int hc)	// 平衡二叉树调整，bst-整个树的根，pa-最小不平衡子树的根，hc-不平衡因子
 {
 	BSTNode *pb=NULL,*pc=NULL;
 	if(hc==2)   // LL型或LR型
