@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-void InsSort(int r[],int n)
+void InsSort(int r[],int n)	// 直接插入排序
 {
 	int i,j;
 	for(i=2;i<=n;i++)
@@ -21,7 +21,7 @@ void InsSort(int r[],int n)
 }
 
 
-void BinSort(int r[],int n)
+void BinSort(int r[],int n)	// 折半插入排序
 {
 	int low,high,mid,i,j;
 	for(i=2;i<=n;i++)
@@ -58,7 +58,7 @@ void xrsort(int r[],int dk,int n)
 			r[j+dk]=r[0];
 		}
 }
-void ShellSort(int *L,int *dk,int t,int n)
+void ShellSort(int *L,int *dk,int t,int n)	// 希尔排序
 {
 	int k;
 	for(k=0;k<t;k++)
@@ -67,7 +67,7 @@ void ShellSort(int *L,int *dk,int t,int n)
 }
 
 
-void MpSort(int r[],int n)
+void MpSort(int r[],int n)	// 冒泡排序
 {
 	int i,j,exchange,t;
 	printf("冒泡排序为:");
@@ -107,7 +107,7 @@ int parti(int r[],int low,int high)
 	r[low]=r[0];
 	return low;
 }
-void KsSort(int r[],int low,int high)
+void KsSort(int r[],int low,int high)	// 快速排序
 {
 	int piv;
 	if(low<high)
@@ -119,7 +119,7 @@ void KsSort(int r[],int low,int high)
 }
 
 
-void XzSort(int r[],int n)
+void XzSort(int r[],int n)	// 简单排序
 {
 	int i,j,minxb,t;
 	for(i=1;i<=n-1;i++)
